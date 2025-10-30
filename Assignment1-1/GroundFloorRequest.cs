@@ -24,7 +24,7 @@ namespace Assignment1_1
 
             floorGndCall.Click += (_, __) =>
             {
-                _controller.LogCommand("Button pressed for floor 0", "Request", "User requested floor 0"); // Calls the LogCommand method to log this command on MySQL
+                _controller.LogCommand("Button pressed for floor 0", "Request", "User requested floor 0", "Location: 0"); // Calls the LogCommand method to log this command on MySQL
                 _controller.RequestFloor(0); // Requests change in floor
             };
 

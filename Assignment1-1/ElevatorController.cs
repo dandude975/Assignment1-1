@@ -19,19 +19,20 @@ namespace Assignment1_1
 
 
         // This method inserts a command into the logged commands SQL database
-        public void LogCommand(string command, string action, string description)
+        public void LogCommand(string command, string action, string description, string location)
         {
             using (var conn = new MySqlConnection(_connStr))
             {
 
                 // Passing in the parameters to protect against SQL injection
                 conn.Open();
-                string sql = "INSERT INTO log_entries (command, action, description) VALUES (@c, @a, @d)";
+                string sql = "INSERT INTO log_entries (command, action, description, location) VALUES (@c, @a, @d, @l)";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@c", command);
                     cmd.Parameters.AddWithValue("@a", action);
                     cmd.Parameters.AddWithValue("@d", description);
+                    cmd.Parameters.AddWithValue("@l", location);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -44,13 +45,13 @@ namespace Assignment1_1
             using (var conn = new MySqlConnection(_connStr))
             {
                 conn.Open();
-                string sql = "SELECT timestamp, command, action, description FROM log_entries ORDER BY timestamp DESC";
+                string sql = "SELECT timestamp, command, action, description, location FROM log_entries ORDER BY timestamp DESC";
                 using (var cmd = new MySqlCommand(sql, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        logs.Add($"[{reader.GetDateTime("timestamp"):HH:mm:ss}] Command: {reader.GetString("command")} | Action: {reader.GetString("action")} | Description: {reader.GetString("description")}");
+                        logs.Add($"[{reader.GetDateTime("timestamp"):HH:mm:ss}] Command: {reader.GetString("command")} | Action: {reader.GetString("action")} | Description: {reader.GetString("description")} | Location: {reader.GetString("location")}");
                     }
                 }
             }
@@ -70,12 +71,12 @@ namespace Assignment1_1
             // If the requested floor is the same as the current one — no movement
             if (target == CurrentFloor)
             {
-                LogCommand($"Move elevator to floor {target}", "None", "Elevator already on this floor");
+                LogCommand($"Move elevator to floor {target}", "None", "Elevator already on this floor", $"Location: {CurrentFloor}");
                 return;
             }
 
             // Log the request to move
-            LogCommand($"Move elevator to floor {target}", "Move", $"Moving from {CurrentFloor} to {target}");
+            LogCommand($"Move elevator to floor {target}", "Move", $"Moving from {CurrentFloor} to {target}", $"Location: {CurrentFloor}");
 
             // Update floor variable
             CurrentFloor = target;
@@ -84,7 +85,7 @@ namespace Assignment1_1
             CurrentFloorChanged?.Invoke(this, CurrentFloor);
 
             // Log arrival
-            LogCommand($"Arrived at floor {target}", "DoorOpen", "Reached target floor and doors opened");
+            LogCommand($"Arrived at floor {target}", "DoorOpen", "Reached target floor and doors opened", $"Location: {CurrentFloor}");
         }
 
     }

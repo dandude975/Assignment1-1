@@ -57,12 +57,12 @@ namespace Assignment1_1
         // ElevatorController.cs to do so.
         private void FloorGndRqst_Click(object sender, EventArgs e)
         {
-            _controller.LogCommand("Button pressed for floor 0", "Request", "User requested floor 0"); // Calls the LogCommand method to log this command on MySQL
+            _controller.LogCommand("Button pressed for floor 0", "Request", "User requested floor 0", "Location: Elevator"); // Calls the LogCommand method to log this command on MySQL
             _controller?.RequestFloor(0); // Requests change in floor
         }
         private void Floor1Rqst_Click(object sender, EventArgs e) 
         {
-            _controller.LogCommand("Button pressed for floor 1", "Request", "User requested floor 1"); // Calls the LogCommand method to log this command on MySQL
+            _controller.LogCommand("Button pressed for floor 1", "Request", "User requested floor 1", "Location: Elevator"); // Calls the LogCommand method to log this command on MySQL
             _controller?.RequestFloor(1); // Requests change in floor
         } 
         private void LogRqst_Click(object sender, EventArgs e) 
