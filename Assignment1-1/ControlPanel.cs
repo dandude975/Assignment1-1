@@ -43,15 +43,15 @@ namespace Assignment1_1
         private void UpdateFloorDisplay(int floor)
         {
             // If the floor parameter is 0, display ground, if not, display 1st Floor
-            label1.Text = floor == 0 ? "Ground" : "1st Floor";
+            textBox1.Text = floor == 0 ? "Ground" : "1st Floor";
         }
 
         private void OnMovementChanged(string status)
         {
             if (InvokeRequired)
-                BeginInvoke(new Action(() => label1.Text = status)); // Replace label1 with your display label
+                BeginInvoke(new Action(() => textBox1.Text = status)); // Replace label1 with your display label
             else
-                label1.Text = status;
+                textBox1.Text = status;
         }
 
 

@@ -46,12 +46,16 @@
             // 
             // display_gfloor
             // 
+            display_gfloor.BackColor = SystemColors.ActiveCaptionText;
+            display_gfloor.BorderStyle = BorderStyle.None;
+            display_gfloor.ForeColor = SystemColors.Window;
             display_gfloor.Location = new Point(12, 12);
             display_gfloor.Name = "display_gfloor";
             display_gfloor.ReadOnly = true;
-            display_gfloor.Size = new Size(100, 23);
+            display_gfloor.Size = new Size(100, 16);
             display_gfloor.TabIndex = 2;
             display_gfloor.TabStop = false;
+            display_gfloor.TextAlign = HorizontalAlignment.Center;
             display_gfloor.TextChanged += display_gfloor_TextChanged;
             // 
             // GroundFloorRequest

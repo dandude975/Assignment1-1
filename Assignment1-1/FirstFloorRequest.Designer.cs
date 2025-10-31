@@ -46,12 +46,16 @@
             // 
             // Display_1floor
             // 
+            Display_1floor.BackColor = SystemColors.ActiveCaptionText;
+            Display_1floor.BorderStyle = BorderStyle.None;
+            Display_1floor.ForeColor = SystemColors.ButtonFace;
             Display_1floor.Location = new Point(12, 12);
             Display_1floor.Name = "Display_1floor";
             Display_1floor.ReadOnly = true;
-            Display_1floor.Size = new Size(100, 23);
+            Display_1floor.Size = new Size(100, 16);
             Display_1floor.TabIndex = 1;
             Display_1floor.TabStop = false;
+            Display_1floor.TextAlign = HorizontalAlignment.Center;
             Display_1floor.TextChanged += Display_1floor_TextChanged;
             // 
             // FirstFloorRequest

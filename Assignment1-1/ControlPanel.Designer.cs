@@ -43,6 +43,7 @@
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 0;
             textBox1.TabStop = false;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // label1
             // 
@@ -57,7 +58,7 @@
             // FloorGndRqst
             // 
             FloorGndRqst.Location = new Point(38, 65);
-            FloorGndRqst.Name = "floorGndRqst";
+            FloorGndRqst.Name = "FloorGndRqst";
             FloorGndRqst.Size = new Size(100, 100);
             FloorGndRqst.TabIndex = 2;
             FloorGndRqst.Text = "Ground Floor";
