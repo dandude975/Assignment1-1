@@ -30,33 +30,47 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroundFloorRequest));
             floorGndCall = new Button();
+            display_gfloor = new TextBox();
             SuspendLayout();
             // 
             // floorGndCall
             // 
             floorGndCall.BackColor = SystemColors.ActiveCaptionText;
             floorGndCall.BackgroundImage = (Image)resources.GetObject("floorGndCall.BackgroundImage");
-            floorGndCall.Location = new Point(12, 12);
+            floorGndCall.Location = new Point(9, 44);
             floorGndCall.Name = "floorGndCall";
             floorGndCall.Size = new Size(100, 100);
             floorGndCall.TabIndex = 1;
             floorGndCall.UseVisualStyleBackColor = false;
             floorGndCall.Click += floorGndCall_Click;
             // 
+            // display_gfloor
+            // 
+            display_gfloor.Location = new Point(12, 12);
+            display_gfloor.Name = "display_gfloor";
+            display_gfloor.ReadOnly = true;
+            display_gfloor.Size = new Size(100, 23);
+            display_gfloor.TabIndex = 2;
+            display_gfloor.TabStop = false;
+            display_gfloor.TextChanged += display_gfloor_TextChanged;
+            // 
             // GroundFloorRequest
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(121, 121);
+            ClientSize = new Size(121, 156);
+            Controls.Add(display_gfloor);
             Controls.Add(floorGndCall);
             Name = "GroundFloorRequest";
             Text = "GroundFloorRequest";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button floorGndCall;
+        private TextBox display_gfloor;
     }
 }

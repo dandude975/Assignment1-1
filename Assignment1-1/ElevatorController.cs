@@ -59,34 +59,60 @@ namespace Assignment1_1
             return logs;
         }
 
-        public event EventHandler<int>? CurrentFloorChanged; // Called whenever the floor changes
+        public event Action<int>? CurrentFloorChanged; // Called whenever the floor changes
+        public event Action<string>? MovementStatusChanged; // NEW: "Moving up", "Moving down", "Idle ..."
+
 
         // Only place in that stores which floor elevator is on
         // 0 is ground floor, 1 is floor 1
         public int CurrentFloor { get; private set; } = 0;
+        private bool _isMoving;
 
         // Only place that can request a change in floor, i.e. move the elevator
-        public void RequestFloor(int target)
+
+        public async Task RequestFloor(int target)
+    {
+        // Optional guard: only floors 0 or 1
+        if (target != 0 && target != 1)
+            return;
+
+        // Busy? prevent re-entrancy
+        if (_isMoving)
         {
-            // If the requested floor is the same as the current one — no movement
-            if (target == CurrentFloor)
-            {
-                LogCommand($"Move elevator to floor {target}", "None", "Elevator already on this floor", $"Location: {CurrentFloor}");
-                return;
-            }
-
-            // Log the request to move
-            LogCommand($"Move elevator to floor {target}", "Move", $"Moving from {CurrentFloor} to {target}", $"Location: {CurrentFloor}");
-
-            // Update floor variable
-            CurrentFloor = target;
-
-            // Notify all forms that the floor has changed
-            CurrentFloorChanged?.Invoke(this, CurrentFloor);
-
-            // Log arrival
-            LogCommand($"Arrived at floor {target}", "DoorOpen", "Reached target floor and doors opened", $"Location: {CurrentFloor}");
+            MovementStatusChanged?.Invoke("Busy");
+            return;
         }
 
+        // Already there
+        if (target == CurrentFloor)
+        {
+            MovementStatusChanged?.Invoke($"Idle at {(CurrentFloor == 0 ? "Ground" : "1st")}");
+            LogCommand($"Move elevator to floor {target}", "None", "Elevator already on this floor",
+                       location: CurrentFloor.ToString());
+            return;
+        }
+
+        // Begin movement
+        _isMoving = true;
+        var dir = target > CurrentFloor ? "Moving up" : "Moving down";
+        MovementStatusChanged?.Invoke(dir);
+
+        LogCommand($"Move elevator to floor {target}", "Move",
+                   $"{dir} from {CurrentFloor} to {target}", location: CurrentFloor.ToString());
+
+        await Task.Delay(3000); // simulate 3s travel
+
+        // Arrive
+        CurrentFloor = target;
+        _isMoving = false;
+
+        CurrentFloorChanged?.Invoke(CurrentFloor);
+        MovementStatusChanged?.Invoke($"Idle at {(CurrentFloor == 0 ? "Ground" : "1st")}");
+
+        LogCommand($"Arrived at floor {target}", "DoorOpen",
+                   "Doors opened", location: CurrentFloor.ToString());
+    }
+
+    
     }
 }

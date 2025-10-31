@@ -21,7 +21,12 @@ namespace Assignment1_1
 
         public FirstFloorRequest(ElevatorController controller) : this()
         {
-            _controller = controller;
+            _controller = controller ?? throw new ArgumentNullException(nameof(controller));
+
+            _controller.CurrentFloorChanged += OnCurrentFloorChanged;
+            _controller.MovementStatusChanged += OnMovementChanged;
+
+            UpdateDisplay(_controller.CurrentFloor);
 
             floor1Call.Click += (_, __) =>
             {
@@ -30,7 +35,29 @@ namespace Assignment1_1
             };
         }
 
+        private void OnCurrentFloorChanged(int floor)
+        {
+            if (InvokeRequired) BeginInvoke(new Action(() => UpdateDisplay(floor)));
+            else UpdateDisplay(floor);
+        }
+
+        private void OnMovementChanged(string status)
+        {
+            if (InvokeRequired) BeginInvoke(new Action(() => Display_1floor.Text = status));
+            else Display_1floor.Text = status;
+        }
+
+        private void UpdateDisplay(int floor)
+        {
+            Display_1floor.Text = (floor == 1) ? "At 1st" : "At Ground";
+        }
+
         private void floor1Call_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Display_1floor_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -21,6 +21,7 @@ namespace Assignment1_1
 
             // Automatically updates the floor when its changed by EventController.cs
             _controller.CurrentFloorChanged += OnCurrentFloorChanged;
+            _controller.MovementStatusChanged += OnMovementChanged;
 
             // Chnages the actual display in accordance to floor change
             UpdateFloorDisplay(_controller.CurrentFloor);
@@ -28,18 +29,14 @@ namespace Assignment1_1
 
         // This runs when ElevatorController changes CurrentFloorChanged.
         // 'sender' is who raised it; 'newFloor' is the parameter (0=Ground, 1=First).
-        private void OnCurrentFloorChanged(object? sender, int newFloor)
+        private void OnCurrentFloorChanged(int newFloor)
         {
             if (InvokeRequired)
-            {
-                // Ensures that any changes made to labels are made on the UI thread
-                // This prevents glitches which can occur from changes made from the background thread
-                Invoke(new Action(() => UpdateFloorDisplay(newFloor)));
-            }
-            
-            // If we are already running on the UI thread, it is safe to call this method directly
-            else UpdateFloorDisplay(newFloor);
+                BeginInvoke(new Action(() => UpdateFloorDisplay(newFloor)));
+            else
+                UpdateFloorDisplay(newFloor);
         }
+
 
 
         // This method simply handles tha actual updating of the labels, after being changed to the UI thread
@@ -48,6 +45,15 @@ namespace Assignment1_1
             // If the floor parameter is 0, display ground, if not, display 1st Floor
             label1.Text = floor == 0 ? "Ground" : "1st Floor";
         }
+
+        private void OnMovementChanged(string status)
+        {
+            if (InvokeRequired)
+                BeginInvoke(new Action(() => label1.Text = status)); // Replace label1 with your display label
+            else
+                label1.Text = status;
+        }
+
 
 
         // These are requests to change floor, made by buttons on the control panel form.
