@@ -19,7 +19,7 @@ namespace Assignment1_1
             // Allows this form to call methods from the controller
             _controller = controller;
 
-            // Automatically updates the floor when its changed by EventController.cs
+            // Automatically updates the floor or movement status when its changed by EventController.cs
             _controller.CurrentFloorChanged += OnCurrentFloorChanged;
             _controller.MovementStatusChanged += OnMovementChanged;
 
@@ -49,7 +49,7 @@ namespace Assignment1_1
         private void OnMovementChanged(string status)
         {
             if (InvokeRequired)
-                BeginInvoke(new Action(() => textBox1.Text = status)); // Replace label1 with your display label
+                BeginInvoke(new Action(() => textBox1.Text = status)); 
             else
                 textBox1.Text = status;
         }
@@ -73,7 +73,7 @@ namespace Assignment1_1
         } 
         private void LogRqst_Click(object sender, EventArgs e) 
         {
-            var logs = _controller?.GetLogs();
+            var logs = _controller?.GetLogs();  // This calls an event handler in ElevatorController.cs to display recorded logs
             MessageBox.Show(string.Join(Environment.NewLine, logs), "Elevator Log");
         }
         
@@ -86,7 +86,7 @@ namespace Assignment1_1
 
         private void ControlPanel_Load(object sender, EventArgs e)
         {
-            // No action needed (you can initialise UI here later if you want)
+            // No action needed
         }
 
     }

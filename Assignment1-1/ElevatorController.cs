@@ -14,6 +14,7 @@ namespace Assignment1_1
     public class ElevatorController
     {
 
+        // Initialising connection with SQL table
         private readonly string _connStr =
         "Server=127.0.0.1;Port=3306;Database=elevator_logs;Uid=root;Pwd=password;";
 
@@ -38,6 +39,8 @@ namespace Assignment1_1
             }
         }
 
+
+        // This method retrieves the SQL table and puts it into a readable format so the user can see the elevator history
         public List<string> GetLogs()
         {
             var logs = new List<string>();

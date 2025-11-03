@@ -19,6 +19,8 @@ namespace Assignment1_1
             var GroundFloorRequest   = new GroundFloorRequest(controller);
             var FirstFloorRequest    = new FirstFloorRequest(controller);
 
+            
+            // Making things look pretty
             GroundFloorRequest.StartPosition = FormStartPosition.Manual;
             GroundFloorRequest.Location = new Point(50, 100);
 
