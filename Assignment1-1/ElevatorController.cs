@@ -103,7 +103,7 @@ namespace Assignment1_1
         LogCommand($"Move elevator to floor {target}", "Move",
                    $"{dir} from {CurrentFloor} to {target}", location: CurrentFloor.ToString());
 
-        await Task.Delay(3000); // simulate 3s travel
+        await Task.Delay(5000); // simulate 3s travel
 
         // Arrive
         CurrentFloor = target;
